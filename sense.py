@@ -13,7 +13,7 @@ home = str(Path.home())
 
 
 with picamera.PiCamera() as camera:
-    camera.resolution = 3280, 2464)
+    camera.resolution = (3280, 2464)
     camera.rotation = 180
     camera.start_preview()
     time.sleep(2)
