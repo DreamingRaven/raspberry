@@ -7,11 +7,14 @@ import os, sys
 import time
 import picamera
 from pathlib import Path
+
+
 home = str(Path.home())
 
 
 with picamera.PiCamera() as camera:
-    camera.resolution = (100, 100)
+    camera.resolution = 3280, 2464)
+    camera.rotation = 180
     camera.start_preview()
     time.sleep(2)
-    camera.capture('image.data', 'yuv')
+    camera.capture(str(time.strftime("%Y-%m-%d_%H:%M:%S", time.gmtime())), 'yuv')
