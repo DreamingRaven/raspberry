@@ -1,7 +1,7 @@
 # @Author: archer
 # @Date:   2019-06-03T19:42:17+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-06-04T19:58:59+01:00
+# @Last modified time: 2019-06-04T20:02:13+01:00
 
 import os, sys
 import time
@@ -18,7 +18,7 @@ def main():
         cam.start_preview()
         while(True):
             time.sleep(2)
-            cam.capture(str(time.strftime("%Y-%m-%d_%H:%M:%S", time.gmtime())), 'hsv')
+            cam.capture(str(time.strftime("%Y-%m-%d_%H:%M:%S", time.gmtime())), 'png')
 
 if __name__ == "__main__":
     main()
