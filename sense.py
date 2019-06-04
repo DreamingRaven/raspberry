@@ -1,20 +1,24 @@
 # @Author: archer
 # @Date:   2019-06-03T19:42:17+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-06-03T19:45:32+01:00
+# @Last modified time: 2019-06-04T19:58:59+01:00
 
 import os, sys
 import time
 import picamera
 from pathlib import Path
 
-
 home = str(Path.home())
 
+def main():
+    # create camera object and only continue if it is still valid
+    with picamera.PiCamera() as cam:
+        cam.resolution = (3280, 2464)
+        cam.rotation = 180
+        cam.start_preview()
+        while(True):
+            time.sleep(2)
+            cam.capture(str(time.strftime("%Y-%m-%d_%H:%M:%S", time.gmtime())), 'hsv')
 
-with picamera.PiCamera() as camera:
-    camera.resolution = (3280, 2464)
-    camera.rotation = 180
-    camera.start_preview()
-    time.sleep(2)
-    camera.capture(str(time.strftime("%Y-%m-%d_%H:%M:%S", time.gmtime())), 'yuv')
+if __name__ == "__main__":
+    main()
