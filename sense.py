@@ -1,7 +1,7 @@
 # @Author: archer
 # @Date:   2019-06-03T19:42:17+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-06-04T20:02:13+01:00
+# @Last modified time: 2019-06-04T20:03:07+01:00
 
 import os, sys
 import time
@@ -17,7 +17,7 @@ def main():
         cam.rotation = 180
         cam.start_preview()
         while(True):
-            time.sleep(2)
+            time.sleep(5)
             cam.capture(str(time.strftime("%Y-%m-%d_%H:%M:%S", time.gmtime())), 'png')
 
 if __name__ == "__main__":
