@@ -8,6 +8,12 @@ import time
 import argparse
 
 from pathlib import Path
+import io
+import random
+import picamera
+from PIL import Image
+
+prior_image = None
 
 home = str(Path.home())
 
@@ -32,12 +38,6 @@ def main():
     #     print("failed")
 
 def main_loop(args):
-    import io
-    import random
-    import picamera
-    from PIL import Image
-
-    prior_image = None
 
     def detect_motion(camera):
         global prior_image
