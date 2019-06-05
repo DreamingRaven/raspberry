@@ -59,7 +59,7 @@ def main_loop(args):
     with picamera.PiCamera() as camera:
         camera.resolution = (1280, 720)
         camera.rotation = 180
-        stream = picamera.PiCameraCircularIO(camera, seconds=10)
+        stream = picamera.PiCameraCircularIO(camera, seconds=20)
         camera.start_recording(stream, format='h264')
         try:
             while True:
