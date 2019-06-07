@@ -1,7 +1,7 @@
 # @Author: archer
 # @Date:   2019-06-03T19:42:17+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-06-04T20:58:46+01:00
+# @Last modified time: 2019-06-07T13:06:03+01:00
 
 import os, sys
 import time
@@ -70,10 +70,11 @@ def main_loop(args):
                     # record the frames "after" motion
                     camera.split_recording('after.h264')
                     # Write the 10 seconds "before" motion to disk as well
-                    stream.copy_to('before.h264', seconds=10)
+                    stream.copy_to('before.h264', seconds=15)
                     stream.clear()
                     # Wait until motion is no longer detected, then split
                     # recording back to the in-memory circular buffer
+                    camera.wait_recording(5)
                     while detect_motion(camera):
                         camera.wait_recording(1)
                     print('Motion stopped!')
