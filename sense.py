@@ -1,7 +1,7 @@
 # @Author: archer
 # @Date:   2019-06-03T19:42:17+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-06-07T13:06:03+01:00
+# @Last modified time: 2019-06-07T15:09:06+01:00
 
 import os, sys
 import time
@@ -60,7 +60,8 @@ def main_loop(args):
         camera.resolution = (1280, 720)
         camera.rotation = 180
         stream = picamera.PiCameraCircularIO(camera, seconds=20)
-        camera.start_recording(stream, format='h264')
+        # camera.start_recording(stream, format='h264')
+        camera.start_recording(stream, format='mjpeg')
         try:
             while True:
                 camera.wait_recording(1)
@@ -68,9 +69,9 @@ def main_loop(args):
                     print('Motion detected!')
                     # As soon as we detect motion, split the recording to
                     # record the frames "after" motion
-                    camera.split_recording('after.h264')
+                    camera.split_recording('after.mjpg')
                     # Write the 10 seconds "before" motion to disk as well
-                    stream.copy_to('before.h264', seconds=15)
+                    stream.copy_to('before.mjpg', seconds=15)
                     stream.clear()
                     # Wait until motion is no longer detected, then split
                     # recording back to the in-memory circular buffer
