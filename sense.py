@@ -69,9 +69,9 @@ def main_loop(args):
                     print('Motion detected!')
                     # As soon as we detect motion, split the recording to
                     # record the frames "after" motion
-                    camera.split_recording('after.mjpg')
+                    camera.split_recording('after.mjpeg')
                     # Write the 10 seconds "before" motion to disk as well
-                    stream.copy_to('before.mjpg', seconds=15)
+                    stream.copy_to('before.mjpeg', seconds=15)
                     stream.clear()
                     # Wait until motion is no longer detected, then split
                     # recording back to the in-memory circular buffer
