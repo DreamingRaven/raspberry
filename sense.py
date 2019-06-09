@@ -23,65 +23,18 @@ def main():
     print(args)
     print(args["resolution"], type(args["resolution"]))
 
-    main_loop(args)
-    # create camera object and only continue if it is still valid
-    # try:
-    #     import picamera
-    #     with picamera.PiCamera() as cam:
-    #         cam.resolution = (3280, 2464)
-    #         cam.rotation = 180
-    #         cam.start_preview()
-    #         while(True):
-    #             time.sleep(5)
-    #             cam.capture(str(time.strftime("%Y-%m-%d_%H:%M:%S", time.gmtime())), 'png')
-    # except:
-    #     print("failed")
+    main_loop2(args)
 
-def main_loop(args):
+def main_loop2(args):
+    # instead of just delaring ensuring the camera is availiable throught
+    with picamera.PiCamera() as cam:
+        # setting all camera settings
+        cam.rotation = args["rotation"]
+        cam.resolution = args["resolution"]
+        cam.framerate = args["framerate"]
+        cam.start_preview()
+        time.sleep(2)
 
-    def detect_motion(camera):
-        global prior_image
-        stream = io.BytesIO()
-        camera.capture(stream, format='jpeg', use_video_port=True)
-        stream.seek(0)
-        if prior_image is None:
-            prior_image = Image.open(stream)
-            return False
-        else:
-            current_image = Image.open(stream)
-            # Compare current_image to prior_image to detect motion. This is
-            # left as an exercise for the reader!
-            result = random.randint(0, 10) == 0
-            # Once motion detection is done, make the prior image the current
-            prior_image = current_image
-            return result
-
-    with picamera.PiCamera() as camera:
-        camera.resolution = (1280, 720)
-        camera.rotation = 180
-        stream = picamera.PiCameraCircularIO(camera, seconds=20)
-        # camera.start_recording(stream, format='h264')
-        camera.start_recording(stream, format='mjpeg')
-        try:
-            while True:
-                camera.wait_recording(1)
-                if detect_motion(camera):
-                    print('Motion detected!')
-                    # As soon as we detect motion, split the recording to
-                    # record the frames "after" motion
-                    camera.split_recording(str(time.strftime("%Y-%m-%d_%H:%M:%S", time.gmtime())) + '_a.mjpeg')
-                    # Write the 10 seconds "before" motion to disk as well
-                    stream.copy_to(str(time.strftime("%Y-%m-%d_%H:%M:%S", time.gmtime())) + '_b.mjpeg', seconds=15)
-                    stream.clear()
-                    # Wait until motion is no longer detected, then split
-                    # recording back to the in-memory circular buffer
-                    camera.wait_recording(5)
-                    while detect_motion(camera):
-                        camera.wait_recording(1)
-                    print('Motion stopped!')
-                    camera.split_recording(stream)
-        finally:
-            camera.stop_recording()
 
 def resolution(s):
     try:
@@ -100,13 +53,18 @@ def argz(argv, description=None):
                         default=str(home),
                         help="set the output directory to dump images")
     parser.add_argument("-t", "--out-type",
-                        default=str("png"),
-                        help="set the output file suffix/ extension to attempt to write to")
+                        default=str(".mjpeg"),
+                        help="set the type of recording to make")
+    parser.add_argument("-a", "--rotation",
+                        default=0,
+                        type=int,
+                        nargs=2,
+                        help="set the angular rotation of the camera")
     parser.add_argument("-r", "--resolution",
-                        default=(3280, 2464),
+                        default=(1280, 720),
                         type=resolution,
                         nargs=2,
-                        help="set the output file suffix/ extension to attempt to write to")
+                        help="requires two args, and sets the resolution of the camera")
     # parser.add_argument("-d", "--data", nargs='+',
     #                     default=[],
     #                     help="path to each file desired to be converted")
@@ -138,3 +96,49 @@ def normArgs(args, pathArgs):
 
 if __name__ == "__main__":
     main()
+
+# def main_loop(args):
+#
+#     def detect_motion(camera):
+#         global prior_image
+#         stream = io.BytesIO()
+#         camera.capture(stream, format='jpeg', use_video_port=True)
+#         stream.seek(0)
+#         if prior_image is None:
+#             prior_image = Image.open(stream)
+#             return False
+#         else:
+#             current_image = Image.open(stream)
+#             # Compare current_image to prior_image to detect motion. This is
+#             # left as an exercise for the reader!
+#             result = random.randint(0, 10) == 0
+#             # Once motion detection is done, make the prior image the current
+#             prior_image = current_image
+#             return result
+#
+#     with picamera.PiCamera() as camera:
+#         camera.resolution = (1280, 720)
+#         camera.rotation = 180
+#         stream = picamera.PiCameraCircularIO(camera, seconds=20)
+#         # camera.start_recording(stream, format='h264')
+#         camera.start_recording(stream, format='mjpeg')
+#         try:
+#             while True:
+#                 camera.wait_recording(1)
+#                 if detect_motion(camera):
+#                     print('Motion detected!')
+#                     # As soon as we detect motion, split the recording to
+#                     # record the frames "after" motion
+#                     camera.split_recording(str(time.strftime("%Y-%m-%d_%H:%M:%S", time.gmtime())) + '_a.mjpeg')
+#                     # Write the 10 seconds "before" motion to disk as well
+#                     stream.copy_to(str(time.strftime("%Y-%m-%d_%H:%M:%S", time.gmtime())) + '_b.mjpeg', seconds=15)
+#                     stream.clear()
+#                     # Wait until motion is no longer detected, then split
+#                     # recording back to the in-memory circular buffer
+#                     camera.wait_recording(5)
+#                     while detect_motion(camera):
+#                         camera.wait_recording(1)
+#                     print('Motion stopped!')
+#                     camera.split_recording(stream)
+#         finally:
+#             camera.stop_recording()
