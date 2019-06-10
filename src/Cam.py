@@ -1,7 +1,7 @@
 # @Author: archer
 # @Date:   2019-06-10T10:52:23+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-06-10T16:24:25+01:00
+# @Last modified time: 2019-06-10T16:25:23+01:00
 
 import sys, os
 
@@ -72,4 +72,3 @@ if(__name__ == "__main__"):
     arg_d = {}
     cam = Cam(arg_d)
     cam.debug()
-~
