@@ -1,7 +1,7 @@
 # @Author: archer
 # @Date:   2019-06-10T10:52:23+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-06-10T12:29:07+01:00
+# @Last modified time: 2019-06-10T12:35:30+01:00
 
 import sys, os
 
@@ -43,11 +43,10 @@ class Cam():
                 "The argument passed in to Cam() is not of type dict")
 
         self.cam = self.picamera.PiCamera()
-        self.cam.resolution = self.args["resolution"]
-        self.cam["resolution"] = self.args["resolution"] 
         for key, value in self.args.items():
             print(key, value)
-            self.cam[key] = value
+            getattr(self.cam, key) = value
+            # self.cam[key] = value
 
     def debug(self):
         """
