@@ -1,7 +1,26 @@
 # @Author: archer
 # @Date:   2019-06-10T10:52:23+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-06-10T14:26:11+01:00
+# @Last modified time: 2019-06-10T16:21:34+01:00
+
+import sys, os
+
+class Cam():
+    """
+    Raspberry pi Camera V2 abstraction library
+
+    This Class fascilitates high level control of the camera module so that the
+    minor points can just be abstracted away and kept cleanly in a class
+    """
+    import picamera
+
+    def __init__(self, args={}):
+        """
+        __init__ can take an argument dict with state overides.
+# @Author: archer
+# @Date:   2019-06-10T10:52:23+01:00
+# @Last modified by:   archer
+# @Last modified time: 2019-06-10T16:21:34+01:00
 
 import sys, os
 
@@ -31,22 +50,25 @@ class Cam():
             "resolution": (1280, 720),
             "framerate": 30,
             "brightness": 50,
-            "image_effect": None,
+            "image_effect": "none",
         }
         # creating a new dict from previous dicts combined overriding fallbacks
         try:
             self.args = {**fallback, **args}
         except TypeError:
-            type, value, traceback = sys.exc_info()
-            print(type, value)
+            etype, value, traceback = sys.exc_info()
+            print(etype, value)
             raise TypeError(
                 "The argument passed in to Cam() is not of type dict")
 
         self.cam = self.picamera.PiCamera()
+        print(type(self.cam.resolution))
         for key, value in self.args.items():
             print(key, value)
-            print(getattr(self.cam, key))
-            print(type(getattr(self.cam, key)))
+
+            func = getattr(self.cam, key)
+            print(func)
+            #print(self.cam.vars())
             # self.cam[key] = value
 
     def debug(self):
@@ -69,3 +91,4 @@ if(__name__ == "__main__"):
     arg_d = {}
     cam = Cam(arg_d)
     cam.debug()
+~
