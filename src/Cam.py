@@ -1,7 +1,7 @@
 # @Author: archer
 # @Date:   2019-06-10T10:52:23+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-06-10T12:08:49+01:00
+# @Last modified time: 2019-06-10T12:16:53+01:00
 
 import sys, os
 
@@ -12,6 +12,7 @@ class Cam():
     This Class fascilitates high level control of the camera module so that the
     minor points can just be abstracted away and kept cleanly in a class
     """
+    import picamera
 
     def __init__(self, args={}):
         """
@@ -20,11 +21,15 @@ class Cam():
 
         args = {
             "rotation": 0,
+            "resolution": (1280, 720),
+            "framerate": 30,
         }
         """
         # fallback dict containing default values
         fallback = {
             "rotation": 0,
+            "resolution": (1280, 720),
+            "framerate": 30,
         }
         # creating a new dict from previous dicts combined overriding fallbacks
         try:
@@ -32,7 +37,8 @@ class Cam():
         except TypeError:
             type, value, traceback = sys.exc_info()
             print(type, value)
-            raise TypeError("The argument passed in to Cam() is not of type dict")
+            raise TypeError(
+                "The argument passed in to Cam() is not of type dict")
 
     def debug(self):
         """
@@ -46,6 +52,9 @@ class Cam():
                 default_flow_style=False))
         except ModuleNotFoundError:
             print("\nCam(args):\n", self.args, "\n")
+
+    def record():
+        pass
 
 if(__name__ == "__main__"):
     arg_d = {}
