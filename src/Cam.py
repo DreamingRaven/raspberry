@@ -1,7 +1,7 @@
 # @Author: archer
 # @Date:   2019-06-10T10:52:23+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-06-10T12:16:53+01:00
+# @Last modified time: 2019-06-10T12:23:31+01:00
 
 import sys, os
 
@@ -30,6 +30,8 @@ class Cam():
             "rotation": 0,
             "resolution": (1280, 720),
             "framerate": 30,
+            "brightness": 50,
+            "image_effect": None,
         }
         # creating a new dict from previous dicts combined overriding fallbacks
         try:
@@ -39,6 +41,10 @@ class Cam():
             print(type, value)
             raise TypeError(
                 "The argument passed in to Cam() is not of type dict")
+
+        self.cam = picamera.PiCamera()
+        for key, value in self.args.items():
+            print(key, value)
 
     def debug(self):
         """
