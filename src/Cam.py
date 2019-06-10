@@ -1,7 +1,7 @@
 # @Author: archer
 # @Date:   2019-06-10T10:52:23+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-06-10T12:39:24+01:00
+# @Last modified time: 2019-06-10T14:26:11+01:00
 
 import sys, os
 
@@ -46,6 +46,7 @@ class Cam():
         for key, value in self.args.items():
             print(key, value)
             print(getattr(self.cam, key))
+            print(type(getattr(self.cam, key)))
             # self.cam[key] = value
 
     def debug(self):
