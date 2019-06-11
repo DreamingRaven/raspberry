@@ -1,7 +1,7 @@
 # @Author: archer
 # @Date:   2019-06-10T10:52:23+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-06-11T12:26:02+01:00
+# @Last modified time: 2019-06-11T12:27:31+01:00
 
 import sys, os, time
 
@@ -27,7 +27,7 @@ class Cam():
         """
         self.args = None
         self.cam = None
-        self.args = _processArgs(args)
+        self.args = self._processArgs(args)
         # self.cam = self.picamera.PiCamera()
         # self.settings(args)
 
