@@ -1,7 +1,7 @@
 # @Author: archer
 # @Date:   2019-06-10T10:52:23+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-06-11T12:27:31+01:00
+# @Last modified time: 2019-06-11T12:28:48+01:00
 
 import sys, os, time
 
@@ -86,7 +86,7 @@ class Cam():
             print("\nCam(args):\n", self.args, "\n")
 
     def record(args={}):
-        with self.picamera.Picamera() as self.cam:
+        with self.picamera.PiCamera() as self.cam:
             # set camera settings + update class state
             self.settings(args)
             self.cam.start_preview()
