@@ -1,7 +1,7 @@
 # @Author: archer
 # @Date:   2019-06-10T10:52:23+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-06-11T12:29:31+01:00
+# @Last modified time: 2019-06-11T12:30:53+01:00
 
 import sys, os, time
 
@@ -39,9 +39,6 @@ class Cam():
         """
         Process the input args to ensure each one exists using fallbacks
         """
-        # check what locals and globals are availiable
-        print("globals:", locals())
-        print("locals:",  globals())
         # fallback dict containing default values
         if(self.args is None):
             fallback = {
@@ -84,6 +81,9 @@ class Cam():
                 default_flow_style=False))
         except ModuleNotFoundError:
             print("\nCam(args):\n", self.args, "\n")
+        # check what locals and globals are availiable
+        print("globals:", locals())
+        print("locals:",  globals())
 
     def record(self, args={}):
         with self.picamera.PiCamera() as self.cam:
