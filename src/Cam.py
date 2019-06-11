@@ -1,7 +1,7 @@
 # @Author: archer
 # @Date:   2019-06-10T10:52:23+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-06-11T12:28:48+01:00
+# @Last modified time: 2019-06-11T12:29:31+01:00
 
 import sys, os, time
 
@@ -85,7 +85,7 @@ class Cam():
         except ModuleNotFoundError:
             print("\nCam(args):\n", self.args, "\n")
 
-    def record(args={}):
+    def record(self, args={}):
         with self.picamera.PiCamera() as self.cam:
             # set camera settings + update class state
             self.settings(args)
