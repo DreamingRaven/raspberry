@@ -1,7 +1,7 @@
 # @Author: archer
 # @Date:   2019-06-10T10:52:23+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-06-10T16:25:23+01:00
+# @Last modified time: 2019-06-11T11:26:37+01:00
 
 import sys, os
 
@@ -25,6 +25,17 @@ class Cam():
             "framerate": 30,
         }
         """
+        self.cam = self.picamera.PiCamera()
+        self.settings(args)
+
+    def settings(self, args={}):
+        _processArgs(args)
+        _setCameraState()
+
+    def _processArgs(self, args={}):
+        """
+        Process the input args to ensure each one exists using fallbacks
+        """
         # fallback dict containing default values
         fallback = {
             "rotation": 0,
@@ -42,15 +53,15 @@ class Cam():
             raise TypeError(
                 "The argument passed in to Cam() is not of type dict")
 
-        self.cam = self.picamera.PiCamera()
-        print(type(self.cam.resolution))
-        for key, value in self.args.items():
-            print(key, value)
-
-            func = getattr(self.cam, key)
-            print(func)
-            #print(self.cam.vars())
-            # self.cam[key] = value
+    def _setCameraState(self):
+        """
+        Private function to set the camera state from processed args
+        """
+        self.cam.rotation = self.args["rotation"]
+        self.cam.resolution = self.args["resolution"]
+        self.cam.framerate = self.args["framerate"]
+        self.cam.brightness = self.args["brightness"]
+        self.cam.image_effect = self.args["image_effect"]
 
     def debug(self):
         """
