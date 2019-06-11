@@ -1,7 +1,7 @@
 # @Author: archer
 # @Date:   2019-06-10T10:52:23+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-06-11T12:30:53+01:00
+# @Last modified time: 2019-06-11T12:34:06+01:00
 
 import sys, os, time
 
@@ -99,7 +99,10 @@ class Cam():
         pass
 
 if(__name__ == "__main__"):
-    arg_d = {}
-    cam = Cam(arg_d)
-    cam.debug()
-    cam.record()
+    with Cam({}) as cam_test:
+        cam_test.debug()
+        cam_test.record()
+
+    # cam = Cam()
+    # cam.debug()
+    # cam.record()
