@@ -1,7 +1,7 @@
 # @Author: archer
 # @Date:   2019-06-10T10:52:23+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-06-12T12:05:30+01:00
+# @Last modified time: 2019-06-12T12:23:33+01:00
 
 import sys, os, time
 
@@ -113,7 +113,7 @@ class Cam():
         pass
 
 if(__name__ == "__main__"):
-    with Cam({"framerate":60}) as cam_test:
+    with Cam({"framerate":30}) as cam_test:
         cam_test.debug()
         cam_test.record()
 
