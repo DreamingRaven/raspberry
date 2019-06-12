@@ -13,6 +13,7 @@ class Cam():
     minor points can just be abstracted away and kept cleanly in a class
     """
     import picamera
+    from PIL import Image
 
     def __init__(self, args={}):
         """
@@ -27,6 +28,7 @@ class Cam():
         """
         self.args = None
         self.cam = None
+        self.prior_image = None
         self.args = self._processArgs(args)
         # self.cam = self.picamera.PiCamera()
         # self.settings(args)
@@ -111,6 +113,22 @@ class Cam():
 
     def __exit__(self, exc_type, exc_value, traceback):
         pass
+
+    def detect_motion(self, camera):
+        stream = io.BytesIO()
+        camera.capture(stream, format='jpeg', use_video_port=True)
+        stream.seek(0)
+        if self.prior_image is None:
+            self.prior_image = Image.open(stream)
+            return False
+        else:
+            current_image = Image.open(stream)
+            # Compare current_image to prior_image to detect motion. This is
+            # left as an exercise for the reader!
+            result = random.randint(0, 10) == 0
+            # Once motion detection is done, make the prior image the current
+            self.prior_image = current_image
+            return result
 
 if(__name__ == "__main__"):
     with Cam({"framerate":30}) as cam_test:
