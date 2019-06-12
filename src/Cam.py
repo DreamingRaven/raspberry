@@ -1,7 +1,7 @@
 # @Author: archer
 # @Date:   2019-06-10T10:52:23+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-06-12T10:28:02+01:00
+# @Last modified time: 2019-06-12T10:28:41+01:00
 
 import sys, os, time
 
@@ -92,7 +92,7 @@ class Cam():
             self.cam.start_preview()
             time.sleep(2)
             frames=100
-            cam.capture_sequence([
+            self.cam.capture_sequence([
                 'image%02d.jpg' % i
                 for i in range(frames)
                 ], use_video_port=True)
