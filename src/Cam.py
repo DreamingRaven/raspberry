@@ -1,7 +1,7 @@
 # @Author: archer
 # @Date:   2019-06-10T10:52:23+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-06-13T12:37:06+01:00
+# @Last modified time: 2019-06-13T12:39:26+01:00
 
 import sys, os, time, io
 
@@ -13,7 +13,7 @@ class Cam():
     minor points can just be abstracted away and kept cleanly in a class
     """
     import picamera
-    from PIL import Image
+    from PIL import Image, ImageChops
 
     def __init__(self, args={}):
         """
@@ -127,7 +127,7 @@ class Cam():
         else:
             current_image = self.Image.open(stream)
 
-            out = abs(current_image - self.prior_image)
+            out = ImageChops.difference(current_image, self.prior_image)
             print(out)
 
             # Compare current_image to prior_image to detect motion. This is
