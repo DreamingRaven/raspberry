@@ -1,7 +1,7 @@
 # @Author: archer
 # @Date:   2019-06-10T10:52:23+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-06-13T12:31:54+01:00
+# @Last modified time: 2019-06-13T12:34:55+01:00
 
 import sys, os, time, io
 
@@ -13,7 +13,7 @@ class Cam():
     minor points can just be abstracted away and kept cleanly in a class
     """
     import picamera
-    import PIL
+    from PIL import Image
 
     def __init__(self, args={}):
         """
@@ -121,16 +121,12 @@ class Cam():
         self.cam.capture(stream, format='jpeg', use_video_port=True)
         stream.seek(0)
         if self.prior_image is None:
-            self.prior_image = self.PIL.Image.open(stream)
+            self.prior_image = self.Image.open(stream)
             return False
         else:
-            current_image = self.PIL.Image.open(stream)
+            current_image = self.Image.open(stream)
             # Compare current_image to prior_image to detect motion. This is
             # left as an exercise for the reader!
-
-            # use python Pillow to compare two images pixelwise
-
-
             result = random.randint(0, 10) == 0
             # Once motion detection is done, make the prior image the current
             self.prior_image = current_image
