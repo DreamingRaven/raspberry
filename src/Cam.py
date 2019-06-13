@@ -1,7 +1,7 @@
 # @Author: archer
 # @Date:   2019-06-10T10:52:23+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-06-13T15:17:35+01:00
+# @Last modified time: 2019-06-13T15:18:35+01:00
 
 import sys, os, time, io
 
@@ -134,7 +134,7 @@ class Cam():
             self.prior_image = current_image
             rgb_diff = self.ImageStat.Stat(rgb_diff).sum
             # self.log.print("difference: " +  str(diff), 0)
-            self.log.rgb("image channel difference sum: ", rbg_diff)
+            self.log.rgb("image channel difference sum: ", rgb_diff)
 
             for channel in rgb_diff:
                 if channel >= threshold:
