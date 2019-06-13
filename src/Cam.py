@@ -1,7 +1,7 @@
 # @Author: archer
 # @Date:   2019-06-10T10:52:23+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-06-13T14:28:30+01:00
+# @Last modified time: 2019-06-13T14:35:36+01:00
 
 import sys, os, time, io
 
@@ -32,7 +32,7 @@ class Cam():
         self.cam = None
         self.prior_image = None
         self.args = self._processArgs(args)
-        self.log = Log().print
+        self.log = Log()
         # self.cam = self.picamera.PiCamera()
         # self.settings(args)
 
@@ -102,7 +102,7 @@ class Cam():
             while True:
                 timer = time.time()
                 self.detect_motion()
-                self.log("^ time taken: " + str(time.time() - timer))
+                self.log.print("^ time taken: " + str(time.time() - timer))
             self.cam.capture_sequence([
                 str(time.strftime("%Y-%m-%d_%H:%M:%S", time.gmtime())) +
                 '_%02d.jpg' % i
@@ -132,7 +132,9 @@ class Cam():
 
             diff = self.ImageChops.difference(current_image, self.prior_image)
             diff = self.ImageStat.Stat(diff).sum
-            self.log("difference: " +  str(diff), 0)
+            self.log.print("difference: " +  str(diff), 0)
+            self.log.rgb(diff)
+
 
             # Compare current_image to prior_image to detect motion. This is
             # left as an exercise for the reader!
@@ -147,7 +149,6 @@ class Log(object):
     import os
     import sys
     from colorama import Fore, Back, Style, init
-    from termcolor import colored # for coloured rbg output in log
 
     className = "Log"
     prePend = "[ " + os.path.basename(sys.argv[0]) + " -> " + className + "] "
@@ -175,9 +176,7 @@ class Log(object):
         # TODO implement level specific formating
 
     def rgb(self, array):
-        print(  colored(str(array[0]), "red"),
-                colored(str(array[1]), "green"),
-                colored(str(array[2]), "blue"))
+        print("[", self.Fore.RED, ",", ",", "]")
 
 if(__name__ == "__main__"):
     with Cam({"framerate":30}) as cam_test:
