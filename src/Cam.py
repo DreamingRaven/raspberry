@@ -1,7 +1,7 @@
 # @Author: archer
 # @Date:   2019-06-10T10:52:23+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-06-13T13:35:03+01:00
+# @Last modified time: 2019-06-13T13:37:14+01:00
 
 import sys, os, time, io
 
@@ -130,7 +130,7 @@ class Cam():
             current_image = self.Image.open(stream)
 
             diff = self.ImageChops.difference(current_image, self.prior_image)
-            print("difference: ", self.ImageStat.sum(diff))
+            print("difference: ", self.ImageStat.Stat(diff).sum)
 
             # Compare current_image to prior_image to detect motion. This is
             # left as an exercise for the reader!
