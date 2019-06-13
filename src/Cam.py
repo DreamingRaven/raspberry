@@ -1,7 +1,7 @@
 # @Author: archer
 # @Date:   2019-06-10T10:52:23+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-06-13T14:19:28+01:00
+# @Last modified time: 2019-06-13T14:28:30+01:00
 
 import sys, os, time, io
 
@@ -147,6 +147,7 @@ class Log(object):
     import os
     import sys
     from colorama import Fore, Back, Style, init
+    from termcolor import colored # for coloured rbg output in log
 
     className = "Log"
     prePend = "[ " + os.path.basename(sys.argv[0]) + " -> " + className + "] "
@@ -172,6 +173,11 @@ class Log(object):
             print(self.Fore.MAGENTA + self.prePend_parent +
                   " [ debug ] " + str(text))
         # TODO implement level specific formating
+
+    def rgb(self, array):
+        print(  colored(str(array[0]), "red"),
+                colored(str(array[1]), "green"),
+                colored(str(array[2]), "blue"))
 
 if(__name__ == "__main__"):
     with Cam({"framerate":30}) as cam_test:
