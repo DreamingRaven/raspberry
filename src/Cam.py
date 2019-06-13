@@ -1,7 +1,7 @@
 # @Author: archer
 # @Date:   2019-06-10T10:52:23+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-06-13T14:36:56+01:00
+# @Last modified time: 2019-06-13T14:38:55+01:00
 
 import sys, os, time, io
 
@@ -176,7 +176,10 @@ class Log(object):
         # TODO implement level specific formating
 
     def rgb(self, array):
-        print("[", self.Fore.RED + str(array[0]), ",", ",", "]")
+        print("[",  self.Fore.RED    + str(array[0]),
+              ",",  self.Fore.GREEN  + str(array[1]),
+              ",",  self.Fore.BLUE   + str(array[2]),
+              "]")
 
 if(__name__ == "__main__"):
     with Cam({"framerate":30}) as cam_test:
