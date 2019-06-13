@@ -1,7 +1,7 @@
 # @Author: archer
 # @Date:   2019-06-10T10:52:23+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-06-13T14:43:22+01:00
+# @Last modified time: 2019-06-13T15:16:50+01:00
 
 import sys, os, time, io
 
@@ -130,18 +130,19 @@ class Cam():
         else:
             current_image = self.Image.open(stream)
 
-            diff = self.ImageChops.difference(current_image, self.prior_image)
-            diff = self.ImageStat.Stat(diff).sum
-            # self.log.print("difference: " +  str(diff), 0)
-            self.log.rgb("image channel difference sum: ", diff)
-
-
-            # Compare current_image to prior_image to detect motion. This is
-            # left as an exercise for the reader!
-            result = False
-            # Once motion detection is done, make the prior image the current
+            rgb_diff = self.ImageChops.difference(current_image, self.prior_image)
             self.prior_image = current_image
-            return result
+            rgb_diff = self.ImageStat.Stat(rgb_diff).sum
+            # self.log.print("difference: " +  str(diff), 0)
+            self.log.rgb("image channel difference sum: ", rbg_diff)
+
+            for channel in rgb_diff:
+                if channel >= threshold:
+                    print("motion!")
+                    # if any channel equal or greater than threshold = motion
+                    return = True
+            # if no channel is greater or equal to threshold = no motion
+            return False
 
 
 class Log(object):
