@@ -1,7 +1,7 @@
 # @Author: archer
 # @Date:   2019-06-10T10:52:23+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-06-13T15:22:36+01:00
+# @Last modified time: 2019-06-13T15:51:43+01:00
 
 import sys, os, time, io
 
@@ -116,6 +116,8 @@ class Cam():
             frames,
             frames / (finish - start)))
 
+    def motion
+
     def __enter__(self):
         return self
 
@@ -134,11 +136,10 @@ class Cam():
 
             rgb_diff = self.ImageChops.difference(current_image, self.prior_image)
             self.prior_image = current_image
-            rgb_diff = self.ImageStat.Stat(rgb_diff).sum
-            # self.log.print("difference: " +  str(diff), 0)
-            self.log.rgb("image channel difference sum: ", rgb_diff)
+            rgb_diff_mean = self.ImageStat.Stat(rgb_diff).mean
+            self.log.rgb("image channel difference sum: ", rgb_diff_mean)
 
-            for channel in rgb_diff:
+            for channel in rgb_diff_mean:
                 if channel >= self.args["threshold"]:
                     print("motion!")
                     # if any channel equal or greater than threshold = motion
