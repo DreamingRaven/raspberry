@@ -96,7 +96,7 @@ class Cam():
             frames=100
 
             start = time.time()
-
+            self.detect_motion()
             self.cam.capture_sequence([
                 str(time.strftime("%Y-%m-%d_%H:%M:%S", time.gmtime())) +
                 '_%02d.jpg' % i
@@ -114,15 +114,15 @@ class Cam():
     def __exit__(self, exc_type, exc_value, traceback):
         pass
 
-    def detect_motion(self, camera):
+    def detect_motion(self):
         stream = io.BytesIO()
-        camera.capture(stream, format='jpeg', use_video_port=True)
+        self.cam.capture(stream, format='jpeg', use_video_port=True)
         stream.seek(0)
         if self.prior_image is None:
-            self.prior_image = Image.open(stream)
+            self.prior_image = self.Image.open(stream)
             return False
         else:
-            current_image = Image.open(stream)
+            current_image = self.Image.open(stream)
             # Compare current_image to prior_image to detect motion. This is
             # left as an exercise for the reader!
             result = random.randint(0, 10) == 0
