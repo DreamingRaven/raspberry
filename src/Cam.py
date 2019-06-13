@@ -1,7 +1,7 @@
 # @Author: archer
 # @Date:   2019-06-10T10:52:23+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-06-13T15:18:35+01:00
+# @Last modified time: 2019-06-13T15:21:28+01:00
 
 import sys, os, time, io
 
@@ -26,6 +26,7 @@ class Cam():
             "framerate": 30,
             "brightness": 50,
             "image_effect": "none",
+            "threshold": 2000000,
         }
         """
         self.args = None
@@ -52,6 +53,7 @@ class Cam():
                 "framerate": 30,
                 "brightness": 50,
                 "image_effect": "none",
+                "threshold": 2000000,
             }
         else:
             fallback = self.args
@@ -137,7 +139,7 @@ class Cam():
             self.log.rgb("image channel difference sum: ", rgb_diff)
 
             for channel in rgb_diff:
-                if channel >= threshold:
+                if channel >= self.args["threshold"]:
                     print("motion!")
                     # if any channel equal or greater than threshold = motion
                     return True
