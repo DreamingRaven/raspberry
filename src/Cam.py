@@ -1,7 +1,7 @@
 # @Author: archer
 # @Date:   2019-06-10T10:52:23+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-06-13T12:34:55+01:00
+# @Last modified time: 2019-06-13T12:37:06+01:00
 
 import sys, os, time, io
 
@@ -99,6 +99,7 @@ class Cam():
 
             start = time.time()
             self.detect_motion()
+            self.detect_motion()
             self.cam.capture_sequence([
                 str(time.strftime("%Y-%m-%d_%H:%M:%S", time.gmtime())) +
                 '_%02d.jpg' % i
@@ -125,6 +126,10 @@ class Cam():
             return False
         else:
             current_image = self.Image.open(stream)
+
+            out = abs(current_image - self.prior_image)
+            print(out)
+
             # Compare current_image to prior_image to detect motion. This is
             # left as an exercise for the reader!
             result = random.randint(0, 10) == 0
