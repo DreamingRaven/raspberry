@@ -1,7 +1,7 @@
 # @Author: archer
 # @Date:   2019-06-10T10:52:23+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-06-13T15:51:43+01:00
+# @Last modified time: 2019-06-13T15:52:48+01:00
 
 import sys, os, time, io
 
@@ -115,8 +115,6 @@ class Cam():
             print('Captured %d frames at %.2ffps' % (
             frames,
             frames / (finish - start)))
-
-    def motion
 
     def __enter__(self):
         return self
