@@ -1,9 +1,9 @@
 # @Author: archer
 # @Date:   2019-06-10T10:52:23+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-06-13T10:58:31+01:00
+# @Last modified time: 2019-06-13T11:02:11+01:00
 
-import sys, os, time
+import sys, os, time, io
 
 class Cam():
     """
