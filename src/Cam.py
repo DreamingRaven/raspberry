@@ -1,7 +1,7 @@
 # @Author: archer
 # @Date:   2019-06-10T10:52:23+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-06-13T13:37:14+01:00
+# @Last modified time: 2019-06-13T14:13:55+01:00
 
 import sys, os, time, io
 
@@ -32,6 +32,7 @@ class Cam():
         self.cam = None
         self.prior_image = None
         self.args = self._processArgs(args)
+        self.log = Log().print
         # self.cam = self.picamera.PiCamera()
         # self.settings(args)
 
@@ -130,7 +131,8 @@ class Cam():
             current_image = self.Image.open(stream)
 
             diff = self.ImageChops.difference(current_image, self.prior_image)
-            print("difference: ", self.ImageStat.Stat(diff).sum)
+            diff = self.ImageStat.Stat(diff).sum
+            self.log("difference: " +  str(diff))
 
             # Compare current_image to prior_image to detect motion. This is
             # left as an exercise for the reader!
@@ -138,6 +140,38 @@ class Cam():
             # Once motion detection is done, make the prior image the current
             self.prior_image = current_image
             return result
+
+
+class Log(object):
+
+    import os
+    import sys
+    from colorama import Fore, Back, Style, init
+
+    className = "Log"
+    prePend = "[ " + os.path.basename(sys.argv[0]) + " -> " + className + "] "
+    prePend_parent = "[ " + os.path.basename(sys.argv[0]) + " ]"
+    init(autoreset=True)  # forces colorama to auto reset colors
+
+    def __init__(self, logLevel=3):
+        self.logLevel = logLevel
+
+    def print(self, text, minLogLevel=3, colour=None):
+        if(minLogLevel == -1):
+            print(text)  # this allows for universal formating as no prePending
+        elif(minLogLevel == 0) and (self.logLevel >= minLogLevel):
+            print(self.Fore.GREEN + self.prePend_parent
+                  + " [ info ] " + str(text))
+        elif(minLogLevel == 1) and (self.logLevel >= minLogLevel):
+            print(self.Fore.YELLOW + self.prePend_parent
+                  + " [ warn ] " + str(text))
+        elif(minLogLevel == 2) and (self.logLevel >= minLogLevel):
+            print(self.Fore.RED + self.prePend_parent
+                  + " [ error ] " + str(text))
+        elif(minLogLevel == 3) and (self.logLevel >= minLogLevel):
+            print(self.Fore.MAGENTA + self.prePend_parent +
+                  " [ debug ] " + str(text))
+        # TODO implement level specific formating
 
 if(__name__ == "__main__"):
     with Cam({"framerate":30}) as cam_test:
