@@ -1,7 +1,7 @@
 # @Author: archer
 # @Date:   2019-06-10T10:52:23+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-06-13T15:16:50+01:00
+# @Last modified time: 2019-06-13T15:17:35+01:00
 
 import sys, os, time, io
 
@@ -140,7 +140,7 @@ class Cam():
                 if channel >= threshold:
                     print("motion!")
                     # if any channel equal or greater than threshold = motion
-                    return = True
+                    return True
             # if no channel is greater or equal to threshold = no motion
             return False
 
