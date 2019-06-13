@@ -1,7 +1,7 @@
 # @Author: archer
 # @Date:   2019-06-10T10:52:23+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-06-13T12:41:32+01:00
+# @Last modified time: 2019-06-13T12:42:28+01:00
 
 import sys, os, time, io
 
@@ -134,7 +134,7 @@ class Cam():
 
             # Compare current_image to prior_image to detect motion. This is
             # left as an exercise for the reader!
-            result = random.randint(0, 10) == 0
+            result = False
             # Once motion detection is done, make the prior image the current
             self.prior_image = current_image
             return result
