@@ -1,7 +1,7 @@
 # @Author: archer
 # @Date:   2019-06-10T10:52:23+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-06-13T14:13:55+01:00
+# @Last modified time: 2019-06-13T14:19:28+01:00
 
 import sys, os, time, io
 
@@ -102,7 +102,7 @@ class Cam():
             while True:
                 timer = time.time()
                 self.detect_motion()
-                print("^ time taken: ", time.time() - timer)
+                self.log("^ time taken: " + str(time.time() - timer))
             self.cam.capture_sequence([
                 str(time.strftime("%Y-%m-%d_%H:%M:%S", time.gmtime())) +
                 '_%02d.jpg' % i
@@ -132,7 +132,7 @@ class Cam():
 
             diff = self.ImageChops.difference(current_image, self.prior_image)
             diff = self.ImageStat.Stat(diff).sum
-            self.log("difference: " +  str(diff))
+            self.log("difference: " +  str(diff), 0)
 
             # Compare current_image to prior_image to detect motion. This is
             # left as an exercise for the reader!
