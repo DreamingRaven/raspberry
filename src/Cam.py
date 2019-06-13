@@ -1,7 +1,7 @@
 # @Author: archer
 # @Date:   2019-06-10T10:52:23+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-06-12T12:23:33+01:00
+# @Last modified time: 2019-06-13T10:58:31+01:00
 
 import sys, os, time
 
@@ -24,6 +24,8 @@ class Cam():
             "rotation": 0,
             "resolution": (1280, 720),
             "framerate": 30,
+            "brightness": 50,
+            "image_effect": "none",
         }
         """
         self.args = None
