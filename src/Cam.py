@@ -1,7 +1,7 @@
 # @Author: archer
 # @Date:   2019-06-10T10:52:23+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-06-20T11:06:48+01:00
+# @Last modified time: 2019-06-20T11:54:35+01:00
 
 import sys, os, time, io
 
@@ -103,6 +103,8 @@ class Cam():
             self.settings(args)
             self.cam.start_preview()
             time.sleep(2)
+            stream = self.picamera.PiCameraCircularIO(self.cam, seconds=10)
+            self.cam.start_recording(stream, format="mjpeg")
             frames=100
 
             start = time.time()
