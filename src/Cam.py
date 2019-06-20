@@ -1,7 +1,7 @@
 # @Author: archer
 # @Date:   2019-06-10T10:52:23+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-06-20T12:17:00+01:00
+# @Last modified time: 2019-06-20T12:28:54+01:00
 
 import sys, os, time, io
 
@@ -105,26 +105,30 @@ class Cam():
             time.sleep(2)
             stream = self.picamera.PiCameraCircularIO(self.cam, seconds=10)
             self.cam.start_recording(stream, format="mjpeg")
-            frames=100
-            start = time.time()
 
-            # main loop
-            while True:
-                timer = time.time()
-                while(self.detect_motion()):
-                    print("motion!")
-                print("no motion")
-                # self.cam.capture_sequence([
-                #     str(time.strftime("%Y-%m-%d_%H:%M:%S", time.gmtime())) +
-                #     '_%02d.jpg' % i
-                #     for i in range(frames)
-                #     ], use_video_port=True)
+            try:
+                frames=100
+                start = time.time()
 
-            self.log.print("^ time taken: " + str(time.time() - timer))
-            finish = time.time()
-            print('Captured %d frames at %.2ffps' % (
-            frames,
-            frames / (finish - start)))
+                # main loop
+                while True:
+                    timer = time.time()
+                    while(self.detect_motion()):
+                        print("motion!")
+                    print("no motion")
+                    # self.cam.capture_sequence([
+                    #     str(time.strftime("%Y-%m-%d_%H:%M:%S", time.gmtime())) +
+                    #     '_%02d.jpg' % i
+                    #     for i in range(frames)
+                    #     ], use_video_port=True)
+
+                # self.log.print("^ time taken: " + str(time.time() - timer))
+                # finish = time.time()
+                # print('Captured %d frames at %.2ffps' % (
+                # frames,
+                # frames / (finish - start)))
+            finally:
+                self.cam.stop_recording()
 
     def __enter__(self):
         return self
@@ -146,7 +150,7 @@ class Cam():
             rgb_diff = self.ImageChops.difference(current_image, self.prior_image)
             self.prior_image = current_image
             rgb_diff_mean = self.ImageStat.Stat(rgb_diff).mean
-            self.log.rgb("image channel difference sum: ", rgb_diff_mean)
+            self.log.rgb("image channel difference sum avg: ", rgb_diff_mean)
 
             for channel in rgb_diff_mean:
                 if channel >= self.args["threshold"]:
