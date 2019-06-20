@@ -1,7 +1,7 @@
 # @Author: archer
 # @Date:   2019-06-10T10:52:23+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-06-20T12:28:54+01:00
+# @Last modified time: 2019-06-20T12:36:52+01:00
 
 import sys, os, time, io
 
@@ -26,7 +26,7 @@ class Cam():
             "framerate": 30,
             "brightness": 50,
             "image_effect": "none",
-            "threshold": 2000000,
+            "threshold": 3.1,
         }
         """
         self.args = None
