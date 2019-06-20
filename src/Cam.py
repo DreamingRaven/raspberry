@@ -110,11 +110,12 @@ class Cam():
                 timer = time.time()
                 self.detect_motion()
                 self.log.print("^ time taken: " + str(time.time() - timer))
-            self.cam.capture_sequence([
-                str(time.strftime("%Y-%m-%d_%H:%M:%S", time.gmtime())) +
-                '_%02d.jpg' % i
-                for i in range(frames)
-                ], use_video_port=True)
+                
+            # self.cam.capture_sequence([
+            #     str(time.strftime("%Y-%m-%d_%H:%M:%S", time.gmtime())) +
+            #     '_%02d.jpg' % i
+            #     for i in range(frames)
+            #     ], use_video_port=True)
 
             finish = time.time()
             print('Captured %d frames at %.2ffps' % (
