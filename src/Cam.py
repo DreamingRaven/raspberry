@@ -93,6 +93,11 @@ class Cam():
         print("locals:",  globals())
 
     def record(self, args={}):
+        """
+        raspberry pi camera recording function which optionaly takes a
+        dictionary of overides, which do not require every option only desired
+        changes from the defaults
+        """
         with self.picamera.PiCamera() as self.cam:
             # set camera settings + update class state
             self.settings(args)
