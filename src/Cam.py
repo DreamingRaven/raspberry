@@ -1,7 +1,7 @@
 # @Author: archer
 # @Date:   2019-06-10T10:52:23+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-06-13T15:54:12+01:00
+# @Last modified time: 2019-06-18T10:43:13+01:00
 
 import sys, os, time, io
 
@@ -108,15 +108,16 @@ class Cam():
             start = time.time()
             while True:
                 timer = time.time()
-                self.detect_motion()
-                self.log.print("^ time taken: " + str(time.time() - timer))
-                
-            # self.cam.capture_sequence([
-            #     str(time.strftime("%Y-%m-%d_%H:%M:%S", time.gmtime())) +
-            #     '_%02d.jpg' % i
-            #     for i in range(frames)
-            #     ], use_video_port=True)
+                while(self.detect_motion()):
+                    pass
 
+                # self.cam.capture_sequence([
+                #     str(time.strftime("%Y-%m-%d_%H:%M:%S", time.gmtime())) +
+                #     '_%02d.jpg' % i
+                #     for i in range(frames)
+                #     ], use_video_port=True)
+
+            self.log.print("^ time taken: " + str(time.time() - timer))
             finish = time.time()
             print('Captured %d frames at %.2ffps' % (
             frames,
@@ -138,6 +139,7 @@ class Cam():
         else:
             current_image = self.Image.open(stream)
 
+            # calculate rgb difference in each individual channel
             rgb_diff = self.ImageChops.difference(current_image, self.prior_image)
             self.prior_image = current_image
             rgb_diff_mean = self.ImageStat.Stat(rgb_diff).mean
@@ -148,6 +150,7 @@ class Cam():
                     print("motion!")
                     # if any channel equal or greater than threshold = motion
                     return True
+
             # if no channel is greater or equal to threshold = no motion
             return False
 
