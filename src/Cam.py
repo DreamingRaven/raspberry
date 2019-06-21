@@ -1,7 +1,7 @@
 # @Author: archer
 # @Date:   2019-06-10T10:52:23+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-06-21T11:30:10+01:00
+# @Last modified time: 2019-06-21T23:02:45+01:00
 
 import sys, os, time, io
 
@@ -115,7 +115,9 @@ class Cam():
         while True:
             while(self.detect_motion()):
                 self.cam.capture(
-                    str(time.strftime("%Y-%m-%d_%H:%M:%S", time.gmtime())) + str(count),
+                    str(time.strftime("%Y-%m-%d_%H:%M:%S", time.gmtime())) +
+                        str(count) +
+                        str(".jpg"),
                     use_video_port=True)
                 count = count + 1
                 # self.cam.capture_sequence([
