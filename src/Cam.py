@@ -1,7 +1,7 @@
 # @Author: archer
 # @Date:   2019-06-10T10:52:23+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-06-20T12:36:52+01:00
+# @Last modified time: 2019-06-21T11:30:10+01:00
 
 import sys, os, time, io
 
@@ -98,7 +98,8 @@ class Cam():
         dictionary of overides, which do not require every option only desired
         changes from the defaults
         """
-        with self.picamera.PiCamera() as self.cam:
+        self.cam = self.picamera.PiCamera()
+        with True:
             # set camera settings + update class state
             self.settings(args)
             self.cam.start_preview()
