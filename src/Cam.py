@@ -104,19 +104,20 @@ class Cam():
             self.settings(args)
             self.cam.start_preview()
             time.sleep(2)
-            stream = self.picamera.PiCameraCircularIO(self.cam, seconds=10)
-            self.cam.start_recording(stream, format="mjpeg")
+            # stream = self.picamera.PiCameraCircularIO(self.cam, seconds=10)
+            # self.cam.start_recording(stream, format="mjpeg")
 
-            try:
-                frames=100
-                start = time.time()
-
-                # main loop
-                while True:
-                    timer = time.time()
-                    while(self.detect_motion()):
-                        print("motion!")
-                    print("no motion")
+            # try:
+            frames=100
+            start = time.time()
+            count = 0
+            # main loop
+            while True:
+                while(self.detect_motion()):
+                    self.cam.capture(
+                        str(time.strftime("%Y-%m-%d_%H:%M:%S", time.gmtime())) + str(count),
+                        use_video_port=True)
+                    count = count + 1
                     # self.cam.capture_sequence([
                     #     str(time.strftime("%Y-%m-%d_%H:%M:%S", time.gmtime())) +
                     #     '_%02d.jpg' % i
@@ -128,8 +129,8 @@ class Cam():
                 # print('Captured %d frames at %.2ffps' % (
                 # frames,
                 # frames / (finish - start)))
-            finally:
-                self.cam.stop_recording()
+            # finally:
+            #     self.cam.stop_recording()
 
     def __enter__(self):
         return self
