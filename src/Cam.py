@@ -99,38 +99,38 @@ class Cam():
         changes from the defaults
         """
         self.cam = self.picamera.PiCamera()
-        with True:
-            # set camera settings + update class state
-            self.settings(args)
-            self.cam.start_preview()
-            time.sleep(2)
-            # stream = self.picamera.PiCameraCircularIO(self.cam, seconds=10)
-            # self.cam.start_recording(stream, format="mjpeg")
+        # with True:
+        # set camera settings + update class state
+        self.settings(args)
+        self.cam.start_preview()
+        time.sleep(2)
+        # stream = self.picamera.PiCameraCircularIO(self.cam, seconds=10)
+        # self.cam.start_recording(stream, format="mjpeg")
 
-            # try:
-            frames=100
-            start = time.time()
-            count = 0
-            # main loop
-            while True:
-                while(self.detect_motion()):
-                    self.cam.capture(
-                        str(time.strftime("%Y-%m-%d_%H:%M:%S", time.gmtime())) + str(count),
-                        use_video_port=True)
-                    count = count + 1
-                    # self.cam.capture_sequence([
-                    #     str(time.strftime("%Y-%m-%d_%H:%M:%S", time.gmtime())) +
-                    #     '_%02d.jpg' % i
-                    #     for i in range(frames)
-                    #     ], use_video_port=True)
+        # try:
+        frames=100
+        start = time.time()
+        count = 0
+        # main loop
+        while True:
+            while(self.detect_motion()):
+                self.cam.capture(
+                    str(time.strftime("%Y-%m-%d_%H:%M:%S", time.gmtime())) + str(count),
+                    use_video_port=True)
+                count = count + 1
+                # self.cam.capture_sequence([
+                #     str(time.strftime("%Y-%m-%d_%H:%M:%S", time.gmtime())) +
+                #     '_%02d.jpg' % i
+                #     for i in range(frames)
+                #     ], use_video_port=True)
 
-                # self.log.print("^ time taken: " + str(time.time() - timer))
-                # finish = time.time()
-                # print('Captured %d frames at %.2ffps' % (
-                # frames,
-                # frames / (finish - start)))
-            # finally:
-            #     self.cam.stop_recording()
+            # self.log.print("^ time taken: " + str(time.time() - timer))
+            # finish = time.time()
+            # print('Captured %d frames at %.2ffps' % (
+            # frames,
+            # frames / (finish - start)))
+        # finally:
+        #     self.cam.stop_recording()
 
     def __enter__(self):
         return self
