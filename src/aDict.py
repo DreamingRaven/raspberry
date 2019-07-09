@@ -1,9 +1,10 @@
-# @Author: archer
-# @Date:   2019-07-09T13:21:57+01:00
+# @Author: George Onoufriou <archer>
+# @Date:   2019-07-09
+# @Email:  george raven community at pm dot me
+# @Filename: aDict.py
 # @Last modified by:   archer
-# @Last modified time: 2019-07-09T13:22:06+01:00
+# @Last modified time: 2019-07-09
 # @License: Please see LICENSE in project root
-
 
 
 from __future__ import print_function           # python 2-3 compat print
