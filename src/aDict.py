@@ -29,10 +29,7 @@ class ADict(MutableMapping):
         try:
             return self.dict[key]
         except KeyError:
-            pass  # what was asked does not exist which is the same as None so will not error
-        except TypeError:
-            print("TypeError: cannot use:", key,
-                  "with object:", type(self.dict))
+            return None  # does not exist is the same as None, gracefull catch
 
     def __setitem__(self, key, value):
         self.dict[key] = value
@@ -68,7 +65,6 @@ if(__name__ == "__main__"):
         "jimmy": 69,
         "my name is phil": "nice to meet you phil",
     }
-
     # check init
     duct = ADict(dictz=dictz)
     # check changing dict is possible
