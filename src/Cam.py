@@ -1,7 +1,7 @@
 # @Author: archer
 # @Date:   2019-06-10T10:52:23+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-06-20T12:36:52+01:00
+# @Last modified time: 2019-06-21T23:11:36+01:00
 
 import sys, os, time, io
 
@@ -98,37 +98,41 @@ class Cam():
         dictionary of overides, which do not require every option only desired
         changes from the defaults
         """
-        with self.picamera.PiCamera() as self.cam:
-            # set camera settings + update class state
-            self.settings(args)
-            self.cam.start_preview()
-            time.sleep(2)
-            stream = self.picamera.PiCameraCircularIO(self.cam, seconds=10)
-            self.cam.start_recording(stream, format="mjpeg")
+        self.cam = self.picamera.PiCamera()
+        # with True:
+        # set camera settings + update class state
+        self.settings(args)
+        self.cam.start_preview()
+        time.sleep(2)
+        # stream = self.picamera.PiCameraCircularIO(self.cam, seconds=10)
+        # self.cam.start_recording(stream, format="mjpeg")
 
-            try:
-                frames=100
-                start = time.time()
+        # try:
+        frames=100
+        start = time.time()
+        count = 0
+        # main loop
+        while True:
+            while(self.detect_motion()):
+                self.cam.capture(
+                    str(time.strftime("%Y-%m-%d_%H:%M:%S_", time.gmtime())) +
+                        str(count) +
+                        str(".jpg"),
+                    use_video_port=True)
+                count = count + 1
+                # self.cam.capture_sequence([
+                #     str(time.strftime("%Y-%m-%d_%H:%M:%S", time.gmtime())) +
+                #     '_%02d.jpg' % i
+                #     for i in range(frames)
+                #     ], use_video_port=True)
 
-                # main loop
-                while True:
-                    timer = time.time()
-                    while(self.detect_motion()):
-                        print("motion!")
-                    print("no motion")
-                    # self.cam.capture_sequence([
-                    #     str(time.strftime("%Y-%m-%d_%H:%M:%S", time.gmtime())) +
-                    #     '_%02d.jpg' % i
-                    #     for i in range(frames)
-                    #     ], use_video_port=True)
-
-                # self.log.print("^ time taken: " + str(time.time() - timer))
-                # finish = time.time()
-                # print('Captured %d frames at %.2ffps' % (
-                # frames,
-                # frames / (finish - start)))
-            finally:
-                self.cam.stop_recording()
+            # self.log.print("^ time taken: " + str(time.time() - timer))
+            # finish = time.time()
+            # print('Captured %d frames at %.2ffps' % (
+            # frames,
+            # frames / (finish - start)))
+        # finally:
+        #     self.cam.stop_recording()
 
     def __enter__(self):
         return self
