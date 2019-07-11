@@ -3,7 +3,7 @@
 # @Email:  george raven community at pm dot me
 # @Filename: aDict.py
 # @Last modified by:   archer
-# @Last modified time: 2019-07-09
+# @Last modified time: 2019-07-10
 # @License: Please see LICENSE in project root
 
 
@@ -46,7 +46,7 @@ class ADict(MutableMapping):
     def __len__(self):
         return len(self.dict)
 
-    def swapDict(self, newDict):
+    def swap(self, newDict):
         oldDict = self.dict
         self.dict = newDict
         return oldDict
@@ -68,7 +68,7 @@ if(__name__ == "__main__"):
     # check init
     duct = ADict(dictz=dictz)
     # check changing dict is possible
-    oldDict = duct.swapDict(dictz2)
+    oldDict = duct.swap(dictz2)
     # check getting value is possible
     value = duct["flower"]
     # check setting value is possible
