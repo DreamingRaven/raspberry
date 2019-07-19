@@ -27,6 +27,7 @@ with picamera.PiCamera() as camera:
     while True:
 
         date = datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S") #"%m_%d_%Y_%H_%M_%S")
+        #ffmpeg -i mjpegvideo.avi -vcodec copy frame%d.jpg
 
         camera.start_recording(date + "_video.mjpeg")
 
