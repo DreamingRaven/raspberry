@@ -1,7 +1,7 @@
 # @Author: archer
 # @Date:   2019-06-24T11:38:32+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-06-24T12:11:31+01:00
+# @Last modified time: 2019-07-04T14:15:46+01:00
 
 # this file is a test file to check if example code can run on any given
 # hardware as existing Cam.py struggles to run longer than 7 minutes on pi0w
@@ -11,14 +11,7 @@ import datetime
 
 import time
 
-
-
-
-
 import picamera
-
-
-
 
 with picamera.PiCamera() as camera:
 
@@ -27,9 +20,8 @@ with picamera.PiCamera() as camera:
     while True:
 
         date = datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S") #"%m_%d_%Y_%H_%M_%S")
-        #ffmpeg -i mjpegvideo.avi -vcodec copy frame%d.jpg
-
-        camera.start_recording(date + "_video.mjpeg")
+        print(date)
+        camera.start_recording(date + ".mjpeg")
 
         camera.wait_recording(60)
 
