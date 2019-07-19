@@ -1,12 +1,16 @@
 import bme680
 import time
 import datetime
-import picamera
 
+cam = None
 try:
-    cam = picamera.PiCamera()
-except picamera.exc.PiCameraMMALError:  # a hack
-    cam = picamera.PiCamera()
+    import picamera
+    try:
+        cam = picamera.PiCamera()
+    except picamera.exc.PiCameraMMALError:  # a hack
+        cam = picamera.PiCamera()
+except ImportError:
+    print("warning: unable to use camera, picmera does not exist")
 
 sensor = bme680.BME680()
 
