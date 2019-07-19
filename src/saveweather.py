@@ -1,5 +1,6 @@
 import bme680
 import time
+import datetime
 
 sensor = bme680.BME680()
 
@@ -16,10 +17,15 @@ sensor.select_gas_heater_profile(0)
 
 while True:
     if sensor.get_sensor_data():
-        output = "{0:.2f} C,{1:.2f} hPa,{2:.2f} %RH".format(sensor.data.temperature, sensor.data.pressure, sensor.data.humidity)
+
+        output = "{3}, {0:.2f} C, {1:.2f} hPa, {2:.2f} %RH".format(
+            sensor.data.temperature,
+            sensor.data.pressure,
+            sensor.data.humidity,
+            datetime.datetime.utcnow().isoformat())
 
         if sensor.data.heat_stable:
-            print("{0},{1} Ohms".format(output, sensor.data.gas_resistance))
+            print("{0}, {1} Ohms".format(output, sensor.data.gas_resistance))
 
         else:
             print(output)
