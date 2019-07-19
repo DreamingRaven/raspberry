@@ -14,7 +14,7 @@ sensor.set_gas_heater_temperature(320)
 sensor.set_gas_heater_duration(150)
 sensor.select_gas_heater_profile(0)
 
-print("UTC,C,hPa,%RH,Ohms")
+# print("UTC,C,hPa,%RH,Ohms")
 while True:
     if sensor.get_sensor_data():
 
