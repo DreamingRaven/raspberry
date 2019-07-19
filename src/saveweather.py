@@ -1,6 +1,12 @@
 import bme680
 import time
 import datetime
+import picamera
+
+try:
+    cam = picamera.PiCamera()
+except picamera.exc.PiCameraMMALError:  # a hack
+    cam = picamera.PiCamera()
 
 sensor = bme680.BME680()
 
