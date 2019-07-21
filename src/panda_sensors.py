@@ -1,7 +1,7 @@
 # @Author: archer
 # @Date:   2019-07-21T21:14:14+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-07-21T22:10:50+01:00
+# @Last modified time: 2019-07-21T22:46:11+01:00
 
 
 from __future__ import print_function, absolute_import   # python 2-3 compat
@@ -18,8 +18,10 @@ class Sense(object):
         args = args if args is not None else dict()
         self.home = os.path.expanduser("~")
         defaults = {
+            "cam": None,
+            "bme680": None,
             "cam_import_attempts": 2,
-            "cam_resolution": "groot",
+            "cam_resolution": (1920, 1080),
             "pylog": logger if logger is not None else print,
         }
         self.args = self._merge_dicts(defaults, args)
@@ -62,15 +64,40 @@ class Sense(object):
 
     def _init_bme680(self):
         """Check that bme680 library and bme680 can be used."""
+        try:
+            import bme680
+            sensor = bme680.BME680()
+            sensor.set_humidity_oversample(bme680.OS_2X)
+            sensor.set_pressure_oversample(bme680.OS_4X)
+            sensor.set_temperature_oversample(bme680.OS_8X)
+            sensor.set_filter(bme680.FILTER_SIZE_3)
+            sensor.set_gas_status(bme680.ENABLE_GAS_MEAS)
+            sensor.set_gas_heater_temperature(320)
+            sensor.set_gas_heater_duration(150)
+            sensor.select_gas_heater_profile(0)
+            return True
+        except ImportError:
+            self.args["pylog"]("warning: unable to import bme680")
+        except NameError:
+            self.args["pylog"]("warning unable to use bme680")
+        self.args["pylog"]("warning: skipping bme680")
         return False
 
     _init_bme680.__annotations__ = {"return": bool}
+
+    def __iter__(self):
+        """Record weather and camera data if availiable and return dict."""
+        while(self.args["cam"] is not None)or(self.args["bme680"] is not None):
+            yield dict()
 
 
 def test():
     sensors = Sense()
     sensors._init_camera()
+    sensors._init_bme680()
     sensors.debug()
+    for i in sensors():
+        print(i)
 
 
 if(__name__ == "__main__"):
