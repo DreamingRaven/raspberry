@@ -117,8 +117,9 @@ def test():
     sensors.debug()
 
     def getWeatherData(request):
-        for data in sensors:
-            yield data
+        return {"hi": "Raymond"}
+        # for data in sensors:
+        #     yield data
 
     from SimpleDataTransport import DataReceiver
     receiver = DataReceiver(host="0.0.0.0", port=5000,
