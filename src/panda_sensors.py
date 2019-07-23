@@ -98,7 +98,7 @@ def test():
     sensors._init_camera()
     sensors._init_bme680()
     sensors.debug()
-    for i in sensors():
+    for i in sensors:
         print(i)
 
 
