@@ -1,7 +1,7 @@
 # @Author: archer
 # @Date:   2019-07-21T21:14:14+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-07-21T22:46:11+01:00
+# @Last modified time: 2019-07-23
 
 
 from __future__ import print_function, absolute_import   # python 2-3 compat
@@ -20,6 +20,8 @@ class Sense(object):
         defaults = {
             "cam": None,
             "bme680": None,
+            "cam_wanted": True,
+            "bme680_wanted": True,
             "cam_import_attempts": 2,
             "cam_resolution": (1920, 1080),
             "pylog": logger if logger is not None else print,
