@@ -54,6 +54,7 @@ class Sense(object):
             for _ in range(self.args["cam_import_attempts"]):
                 try:  # try to init camera _ times
                     self.args["cam"] = picamera.PiCamera()
+                    self.args["cam"].start_preview()
                     return True
                 except picamera.exc.PiCameraMMALError:
                     self.args["pylog"]("warning: unable to start camera")
@@ -77,6 +78,7 @@ class Sense(object):
             sensor.set_gas_heater_temperature(320)
             sensor.set_gas_heater_duration(150)
             sensor.select_gas_heater_profile(0)
+            self.args["bme680"] = sensor
             return True
         except ImportError:
             self.args["pylog"]("warning: unable to import bme680")
@@ -96,7 +98,13 @@ class Sense(object):
             if(self.args["cam"] is not None):
                 pass
             if(self.args["bme680"] is not None):
-                pass
+                sensor_data["temperature"] = \
+                    self.args["bme680"].data.temperature
+                sensor_data["pressure"] = \
+                    self.args["bme680"].data.pressure
+                sensor_data["humidity"] = \
+                    self.args["bme680"].data.humidity
+            pass
             yield sensor_data
 
 
