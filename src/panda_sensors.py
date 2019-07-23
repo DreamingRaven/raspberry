@@ -107,6 +107,7 @@ def test():
     sensors.debug()
     for i in sensors:
         print(i)
+        time.sleep(0.1)
 
 
 if(__name__ == "__main__"):
