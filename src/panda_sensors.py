@@ -89,25 +89,24 @@ class Sense(object):
 
     _init_bme680.__annotations__ = {"return": bool}
 
-    def __iter__(self):
+    def getWeatherData(self, requests=None):
         """Record weather and camera data if availiable and return dict."""
-        while(self.args["cam"] is not None)or(self.args["bme680"] is not None):
-            sensor_data = {
-                "datetime_utc_now": datetime.datetime.utcnow().isoformat(),
-            }
-            if(self.args["cam"] is not None):
-                pass
-            if(self.args["bme680"] is not None):
-                sensor_data["temperature"] = \
-                    self.args["bme680"].data.temperature
-                sensor_data["pressure"] = \
-                    self.args["bme680"].data.pressure
-                sensor_data["humidity"] = \
-                    self.args["bme680"].data.humidity
-                sensor_data["air_quality"] = \
-                    self.args["bme680"].data.gas_resistance
+        # while(self.args["cam"] is not None)or(self.args["bme680"] is not None):
+        sensor_data = {
+            "datetime_utc_now": datetime.datetime.utcnow().isoformat(),
+        }
+        if(self.args["cam"] is not None):
             pass
-            yield sensor_data
+        if(self.args["bme680"] is not None):
+            sensor_data["temperature"] = \
+                self.args["bme680"].data.temperature
+            sensor_data["pressure"] = \
+                self.args["bme680"].data.pressure
+            sensor_data["humidity"] = \
+                self.args["bme680"].data.humidity
+            sensor_data["air_quality"] = \
+                self.args["bme680"].data.gas_resistance
+            return sensor_data
 
 
 def test():
@@ -123,7 +122,7 @@ def test():
 
     from SimpleDataTransport import DataReceiver
     receiver = DataReceiver(host="0.0.0.0", port=5000,
-                            callback=getWeatherData,
+                            callback=sensors.getWeatherData,
                             endpoint="/api/weather")
     receiver.run()
 
