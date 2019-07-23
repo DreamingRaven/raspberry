@@ -110,14 +110,29 @@ class Sense(object):
             yield sensor_data
 
 
-def test():
+def getWeatherData(request):
     sensors = Sense()
     sensors._init_camera()
     sensors._init_bme680()
     sensors.debug()
-    for i in sensors:
-        print(i)
-        time.sleep(0.1)
+    for data in sensors:
+        yield data
+
+
+def test():
+    # sensors = Sense()
+    # sensors._init_camera()
+    # sensors._init_bme680()
+    # sensors.debug()
+    # for data in sensors:
+    #     print(data)
+    #     time.sleep(0.1)
+    # simple test for data sending
+    from SimpleDataTransport import DataReceiver
+    receiver = DataReceiver(host="0.0.0.0", port=5000,
+                            callback=getWeatherData,
+                            endpoint="/api/weather")
+    receiver.run()
 
 
 if(__name__ == "__main__"):
