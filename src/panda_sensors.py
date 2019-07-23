@@ -104,6 +104,8 @@ class Sense(object):
                     self.args["bme680"].data.pressure
                 sensor_data["humidity"] = \
                     self.args["bme680"].data.humidity
+                sensor_data["air_quality"] = \
+                    self.args["bme680"].data.gas_resistance
             pass
             yield sensor_data
 
