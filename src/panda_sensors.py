@@ -106,7 +106,7 @@ class Sense(object):
                 self.args["bme680"].data.humidity
             sensor_data["air_quality"] = \
                 self.args["bme680"].data.gas_resistance
-            return sensor_data
+        return sensor_data
 
 
 def test():
@@ -114,6 +114,14 @@ def test():
     sensors._init_camera()
     sensors._init_bme680()
     sensors.debug()
+    print(sensors.getWeatherData())
+    time.sleep(1)
+    print(sensors.getWeatherData())
+    time.sleep(1)
+    print(sensors.getWeatherData())
+    time.sleep(1)
+    print(sensors.getWeatherData())
+    time.sleep(1)
 
     def getWeatherData(request):
         return {"hi": "Raymond"}
