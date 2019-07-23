@@ -90,7 +90,14 @@ class Sense(object):
     def __iter__(self):
         """Record weather and camera data if availiable and return dict."""
         while(self.args["cam"] is not None)or(self.args["bme680"] is not None):
-            yield dict()
+            sensor_data = {
+                "datetime_utc_now": datetime.datetime.utcnow().isoformat(),
+            }
+            if(self.args["cam"] is not None):
+                pass
+            if(self.args["bme680"] is not None):
+                pass
+            yield sensor_data
 
 
 def test():
