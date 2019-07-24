@@ -93,7 +93,7 @@ class Sense(object):
         """Record weather and camera data if availiable and return dict."""
         while(self.args["cam"] is not None)or(self.args["bme680"] is not None):
             sensor_data = {
-                "datetime_utc_now": datetime.datetime.utcnow().isoformat(),
+                "datetime_utc_pi_zero": datetime.datetime.utcnow().isoformat(),
             }
             if(self.args["cam"] is not None):
                 pass
@@ -132,9 +132,9 @@ def test():
     sensors.debug()
     for data in sensors:
         print(data)
+        print(sensors.__iter__())
 
     def getWeatherData(request):
-        print(sensors.next())
         return {"hi": "Raymond"}
         # for data in sensors:
         #     yield data
