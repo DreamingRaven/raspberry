@@ -132,7 +132,7 @@ def test():
     sensors.debug()
     for data in sensors:
         print(data)
-        print(sensors.__iter__())
+        print(next(sensors))
 
     def getWeatherData(request):
         return {"hi": "Raymond"}
