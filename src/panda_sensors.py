@@ -129,6 +129,8 @@ def test():
     sensors._init_camera()
     sensors._init_bme680()
     sensors.debug()
+    for data in sensors:
+        print(sensors)
 
     def getWeatherData(request):
         print(sensors.next())
