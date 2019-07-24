@@ -98,6 +98,7 @@ class Sense(object):
             if(self.args["cam"] is not None):
                 pass
             if(self.args["bme680"] is not None):
+                self.args["bme680"].get_sensor_data()
                 sensor_data["temperature"] = \
                     self.args["bme680"].data.temperature
                 sensor_data["pressure"] = \
