@@ -130,14 +130,11 @@ def test():
     sensors._init_camera()
     sensors._init_bme680()
     sensors.debug()
-    for data in sensors:
-        print(data)
-        print(next(sensors.__iter__))
 
     def getWeatherData(request):
-        return {"hi": "Raymond"}
-        # for data in sensors:
-        #     yield data
+        for data in sensors:
+            print(data)
+            return data
 
     from SimpleDataTransport import DataReceiver
     receiver = DataReceiver(host="0.0.0.0", port=5000,
