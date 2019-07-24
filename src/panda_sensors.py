@@ -1,7 +1,7 @@
 # @Author: archer
 # @Date:   2019-07-21T21:14:14+01:00
 # @Last modified by:   archer
-# @Last modified time: 2019-07-23
+# @Last modified time: 2019-07-24
 
 
 from __future__ import print_function, absolute_import   # python 2-3 compat
@@ -106,6 +106,7 @@ class Sense(object):
                 self.args["bme680"].data.humidity
             sensor_data["air_quality"] = \
                 self.args["bme680"].data.gas_resistance
+        print(sensor_data)
         return sensor_data
 
 
