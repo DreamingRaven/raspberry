@@ -89,25 +89,39 @@ class Sense(object):
 
     _init_bme680.__annotations__ = {"return": bool}
 
-    def getWeatherData(self, requests=None):
+    def __iter__(self):
         """Record weather and camera data if availiable and return dict."""
-        # while(self.args["cam"] is not None)or(self.args["bme680"] is not None):
-        sensor_data = {
-            "datetime_utc_now": datetime.datetime.utcnow().isoformat(),
-        }
-        if(self.args["cam"] is not None):
-            pass
-        if(self.args["bme680"] is not None):
-            sensor_data["temperature"] = \
-                self.args["bme680"].data.temperature
-            sensor_data["pressure"] = \
-                self.args["bme680"].data.pressure
-            sensor_data["humidity"] = \
-                self.args["bme680"].data.humidity
-            sensor_data["air_quality"] = \
-                self.args["bme680"].data.gas_resistance
-        print(sensor_data)
-        return sensor_data
+        while(self.args["cam"] is not None)or(self.args["bme680"] is not None):
+            sensor_data = {
+                "datetime_utc_now": datetime.datetime.utcnow().isoformat(),
+            }
+            if(self.args["cam"] is not None):
+                pass
+            if(self.args["bme680"] is not None):
+                sensor_data["temperature"] = \
+                    self.args["bme680"].data.temperature
+                sensor_data["pressure"] = \
+                    self.args["bme680"].data.pressure
+                sensor_data["humidity"] = \
+                    self.args["bme680"].data.humidity
+                sensor_data["air_quality"] = \
+                    self.args["bme680"].data.gas_resistance
+            yield sensor_data
+        # sensor_data = {
+        #     "datetime_utc_now": datetime.datetime.utcnow().isoformat(),
+        # }
+        # if(self.args["cam"] is not None):
+        #     pass
+        # if(self.args["bme680"] is not None):
+        #     sensor_data["temperature"] = \
+        #         self.args["bme680"].data.temperature
+        #     sensor_data["pressure"] = \
+        #         self.args["bme680"].data.pressure
+        #     sensor_data["humidity"] = \
+        #         self.args["bme680"].data.humidity
+        #     sensor_data["air_quality"] = \
+        #         self.args["bme680"].data.gas_resistance
+        # return sensor_data
 
 
 def test():
@@ -115,23 +129,16 @@ def test():
     sensors._init_camera()
     sensors._init_bme680()
     sensors.debug()
-    print(sensors.getWeatherData())
-    time.sleep(1)
-    print(sensors.getWeatherData())
-    time.sleep(1)
-    print(sensors.getWeatherData())
-    time.sleep(1)
-    print(sensors.getWeatherData())
-    time.sleep(1)
 
     def getWeatherData(request):
+        print(sensors.next())
         return {"hi": "Raymond"}
         # for data in sensors:
         #     yield data
 
     from SimpleDataTransport import DataReceiver
     receiver = DataReceiver(host="0.0.0.0", port=5000,
-                            callback=sensors.getWeatherData,
+                            callback=getWeatherData,
                             endpoint="/api/weather")
     receiver.run()
 
